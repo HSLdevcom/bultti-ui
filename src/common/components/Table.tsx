@@ -19,6 +19,7 @@ import { FixedSizeList as List } from 'react-window'
 import { TextInput } from '../input/Input'
 import { useDebounce, useDebouncedCallback } from 'use-debounce'
 import { SCROLLBAR_WIDTH } from '../../constants'
+import { useFormBlocker } from '../../util/useFormBlocker'
 
 const TableWrapper = styled.div`
   position: relative;
@@ -693,6 +694,8 @@ const Table = observer(
     }
 
     let tableViewWidth = Math.ceil(width + SCROLLBAR_WIDTH)
+
+    useFormBlocker(pendingValues.length !== 0 && !!onSaveEdit)
 
     return (
       <TableContext.Provider value={contextValue}>

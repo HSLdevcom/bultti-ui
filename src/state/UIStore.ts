@@ -4,6 +4,7 @@ import { Language } from '../util/translate'
 import { Operator, Season } from '../schema-types'
 import { operatorIsAuthorized } from '../util/operatorIsAuthorized'
 import { setUrlValue } from '../util/urlValue'
+import { uniqueId } from 'lodash'
 
 // Language state is separate because some parts of the app that aren't
 // in the scope of the React component tree may want to use it.
@@ -17,6 +18,7 @@ export const setLanguage = action((setTo: Language = 'fi') => {
 
 export const UIStore = (state): UIActions => {
   const defaultState = {
+    unsavedFormIds: [],
     appLoaded: false,
     globalOperator: null,
     globalSeason: null,
@@ -51,12 +53,26 @@ export const UIStore = (state): UIActions => {
     state.appLoaded = true
   })
 
-  const setUnsavedFormIds = action((unsavedFormIds: string[]) => {
-    state.unsavedFormIds = unsavedFormIds
-  })
+  const setFormUnsaved = action((unsavedFormId: string, isUnsaved = true) => {
+    let useFormId =
+      (unsavedFormId && isUnsaved) || !isUnsaved
+        ? unsavedFormId
+        : !unsavedFormId && isUnsaved
+        ? uniqueId()
+        : ''
 
-  const removeUnsavedFormId = action((idToRemove: string) => {
-    state.unsavedFormIds = state.unsavedFormIds.filter((id) => id !== idToRemove)
+    let isCurrentlyUnsaved = state.unsavedFormIds.includes(useFormId)
+
+    if (isUnsaved && !isCurrentlyUnsaved) {
+      state.unsavedFormIds = [...state.unsavedFormIds, useFormId]
+      return useFormId
+    }
+
+    if (!isUnsaved && isCurrentlyUnsaved) {
+      state.unsavedFormIds = [...state.unsavedFormIds].filter((id) => id !== useFormId)
+    }
+
+    return ''
   })
 
   return {
@@ -65,7 +81,6 @@ export const UIStore = (state): UIActions => {
     appLoaded: onAppLoaded,
     language: setLanguage,
     errorMessage: setErrorMessage,
-    unsavedFormIds: setUnsavedFormIds,
-    removeUnsavedFormId: removeUnsavedFormId,
+    unsavedFormIds: setFormUnsaved,
   }
 }
