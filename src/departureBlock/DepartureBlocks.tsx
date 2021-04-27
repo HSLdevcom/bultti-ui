@@ -24,7 +24,7 @@ type PropTypes = {
 }
 
 const DepartureBlocks: React.FC<PropTypes> = observer(({ isEditable, onUpdate, isValid }) => {
-  const inspection = useContext(InspectionContext)
+  let { inspection } = useContext(InspectionContext)
   const inspectionId = inspection?.id || ''
 
   // Create day type groups with the special hook. Day type groups are departure blocks grouped by dayType.

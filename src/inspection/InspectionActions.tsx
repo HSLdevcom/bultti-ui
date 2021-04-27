@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback } from 'react'
+import React, { CSSProperties, useCallback, useContext, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { observer } from 'mobx-react-lite'
 import { Inspection, InspectionStatus, InspectionType, Season } from '../schema-types'
@@ -20,6 +20,7 @@ import { useMatch } from '@reach/router'
 import { useHasAdminAccessRights, useHasOperatorUserAccessRights } from '../util/userRoles'
 import { navigateWithQueryString } from '../util/urlValue'
 import { Text } from '../util/translate'
+import { InspectionContext } from './InspectionContext'
 
 const ButtonRow = styled.div`
   margin: auto -1rem 0;
@@ -171,6 +172,8 @@ const InspectionActions = observer(
       inspection.inspectionType === InspectionType.Post &&
       inspection.status === InspectionStatus.Draft
 
+    let { isDirty } = useContext(InspectionContext)
+    console.log('isDirty ? ', isDirty)
     return (
       <>
         <ButtonRow className={className} style={style}>
@@ -203,7 +206,7 @@ const InspectionActions = observer(
             <Button
               loading={submitLoading}
               buttonStyle={ButtonStyle.NORMAL}
-              disabled={hasErrors}
+              disabled={hasErrors || !isDirty}
               size={ButtonSize.MEDIUM}
               onClick={onSubmitInspection}>
               <Text>inspection_actions_submit</Text>

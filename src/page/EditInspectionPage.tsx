@@ -117,7 +117,7 @@ const EditInspectionPage: React.FC<PropTypes> = observer(
 
     return (
       <EditInspectionView>
-        <InspectionContext.Provider value={inspection || null}>
+        <InspectionContext.Provider value={{ inspection: inspection || null }}>
           <PageTitle loading={inspectionLoading} onRefresh={refetch}>
             <InspectionTypeContainer>
               {inspection?.status !== InspectionStatus.InProduction

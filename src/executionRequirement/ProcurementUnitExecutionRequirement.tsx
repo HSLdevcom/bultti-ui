@@ -74,7 +74,7 @@ export type PropTypes = {
 
 const ProcurementUnitExecutionRequirement: React.FC<PropTypes> = observer(
   ({ procurementUnit, isEditable, onUpdate, valid = true }) => {
-    let inspection = useContext(InspectionContext)
+    let { inspection } = useContext(InspectionContext)
 
     let {
       data: procurementUnitRequirement,

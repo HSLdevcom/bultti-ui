@@ -32,7 +32,7 @@ export type PropTypes = {
 
 const PreInspectionExecutionRequirements: React.FC<PropTypes> = observer(
   ({ isValid = false }) => {
-    const inspection = useContext(InspectionContext)
+    let { inspection } = useContext(InspectionContext)
     let { id } = inspection || {}
 
     let {

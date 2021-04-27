@@ -68,7 +68,7 @@ export type PropTypes = {
 }
 
 const PostInspectionExecutionRequirements = observer(({ isEditable }: PropTypes) => {
-  const inspection = useContext(InspectionContext)
+  let { inspection } = useContext(InspectionContext)
 
   let execReqsMissing = useHasInspectionError(
     inspection,

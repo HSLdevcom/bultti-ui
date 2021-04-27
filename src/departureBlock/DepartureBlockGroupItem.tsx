@@ -71,7 +71,7 @@ const DepartureBlockGroupItem: React.FC<PropTypes> = observer(
   }) => {
     let [showBlocksLoading, setShowBlocksLoading] = useState(loading)
 
-    let inspection = useContext(InspectionContext)
+    let { inspection } = useContext(InspectionContext)
     let inspectionId = inspection?.id || ''
 
     useEffect(() => {
