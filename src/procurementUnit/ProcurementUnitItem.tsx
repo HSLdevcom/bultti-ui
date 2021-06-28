@@ -66,7 +66,9 @@ const ProcurementUnitItem: React.FC<PropTypes> = observer(
     )
 
     let catalogueInvalid = validationErrors.some(
-      (err) => err.type === InspectionValidationError.MissingEquipmentCatalogues
+      (err) =>
+        err.type === InspectionValidationError.MissingEquipmentCatalogues ||
+        err.type === InspectionValidationError.MissingRequirementVehicles
     )
 
     let contractInvalid = validationErrors.some((err) =>

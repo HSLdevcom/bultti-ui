@@ -283,6 +283,7 @@
   "INVALID_CONTRACTS": "Tarkastukseen on liitetty sopimuksia jotka eivät ole voimassa tarkastusjakson aikaan.",
   "MISSING_EXECUTION_REQUIREMENTS": "Joiltakin kohteilta puuttuu suoritevaatimus.",
   "MISSING_REQUIREMENT_QUOTAS": "Joiltakin kohteilta puuttuu suoritevaatimusten kalusto-osuuksia.",
+  "MISSING_REQUIREMENT_VEHICLES": "Kalustoluettelon ja suunniteltujen autojen määrä ei täsmää, lisää ajoneuvo tarkastuskohtaisesti tälle kilpailukohteelle.",
   "HFP_UNAVAILABLE_FOR_INSPECTION_DATES": "Tarkastuksen jaksolle ei löydy ladattua HFP-tietoa.",
   "POST_INSPECTION_MISSING_LINKED_PRE_INSPECTIONS": "Jälkitarkastukselle ei löydy julkaistuja ennakkotarkastuksia.",
 
