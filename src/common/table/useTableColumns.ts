@@ -1,5 +1,6 @@
 import { Dictionary, difference, get, omitBy, orderBy } from 'lodash'
-import { TableItemType } from './tableUtils'
+import { findEmptyKeys, TableItemType } from './tableUtils'
+import { useMemo } from 'react'
 
 export function useTableColumns<ItemType extends TableItemType>({
   items,
@@ -12,11 +13,16 @@ export function useTableColumns<ItemType extends TableItemType>({
   columnOrder?: string[]
   hideKeys?: string[]
 }) {
+  // Collect an array of keys that are empty for all items. These will be hidden.
+  let emptyValues = useMemo(() => findEmptyKeys(items), [items])
+
   // Order the keys and get cleartext labels for the columns
-  // Omit keys that start with an underscore.
+  // Omit keys that start with an underscore or which are empty in all items.
+  // This filtering needs to match the items filtering done in useTableRows().
   let columns = Object.keys(
-    omitBy((items[0] || columnLabels) as Dictionary<ItemType>, (val, key) =>
-      key.startsWith('_')
+    omitBy(
+      (items[0] || columnLabels) as Dictionary<ItemType>,
+      (val, key) => emptyValues.includes(key) || key.startsWith('_')
     )
   )
 
@@ -30,7 +36,6 @@ export function useTableColumns<ItemType extends TableItemType>({
   // Hide keys listed in hideKeys if hideKeys is a non-zero array.
   // Hide keys NOT listed in columnLabels if hideKeys is undefined.
   // If hideKeys is a zero-length array no keys will be hidden.
-
   if (hideKeys && hideKeys.length !== 0) {
     keysToHide = hideKeys
   } else if (!hideKeys && columnLabelKeys.length !== 0) {

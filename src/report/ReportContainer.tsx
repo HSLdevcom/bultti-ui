@@ -7,9 +7,8 @@ import { InspectionStatus, InspectionType } from '../schema-types'
 import { createResponseId, useTableState } from '../common/table/useTableState'
 import DownloadReport from './DownloadReport'
 import { Button, ButtonSize, ButtonStyle } from '../common/components/buttons/Button'
-import { Text } from '../util/translate'
+import { text, Text } from '../util/translate'
 import { FlexRow } from '../common/components/common'
-import { BaseReport } from '../type/report'
 import { ReportTypeByName } from './reportTypes'
 import { LoadingDisplay } from '../common/components/Loading'
 import ExecutionRequirementsReport from './ExecutionRequirementsReport'
@@ -18,6 +17,7 @@ import FilteredResponseTable from '../common/table/FilteredResponseTable'
 import { hasReportTransform, transformReport } from './transformReports'
 import { createColumnTotalCallback } from './reportTotals'
 import { reportCellHighlightColorMap } from './reportCellHighlightColor'
+import { BaseReport } from '../type/report'
 
 const ReportViewWrapper = styled.div`
   position: relative;
@@ -168,14 +168,22 @@ const ReportContainer = observer((props: PropTypes) => {
       ) : reportType === 'observedExecutionRequirement' ? (
         <ObservedExecutionRequirementsReport items={reportDataItems} />
       ) : (
-        <FilteredResponseTable
-          data={preparedReport}
-          tableState={tableState}
-          columnLabels={columnLabels}
-          keyFromItem={reportKeyFromItem}
-          getColumnTotal={calculateReportTotals}
-          getCellHighlightColor={getCellHighlightColor}
-        />
+        preparedReport && (
+          <FilteredResponseTable
+            data={preparedReport}
+            tableState={tableState}
+            columnLabels={columnLabels}
+            keyFromItem={reportKeyFromItem}
+            getColumnTotal={calculateReportTotals}
+            getCellHighlightColor={getCellHighlightColor}
+            groupBy={
+              report?.groupRowsBy
+                ? (item) =>
+                    report?.groupRowsBy ? text(item[report.groupRowsBy] as string) : 'default'
+                : undefined
+            }
+          />
+        )
       )}
     </ReportViewWrapper>
   )

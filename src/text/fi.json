@@ -282,6 +282,10 @@
   "report_filtering_apply": "Suodata",
   "report_filtering_hint": "Suodata raporttitaulukkoa lisäämällä kenttä ylläolevalla painikkeella. Kirjoita tekstikentään arvo ja valitse valikosta sarakkeen jonka mukaan haluat suodata tuloksia. Jos haluat suodata kyllä/ei arvoja, voit käyttää suodatinarvona: true/false, kyllä/ei tai yes/no. Negatiiviset arvot toimii myös jos haluat listata rivit mistä puuttuu jokin arvo.",
 
+  "DEPARTURE": "Lähdöittäin",
+  "OPERATING_AREA": "Alueittain",
+  "PROCUREMENT_UNIT": "Kohteittain",
+
   "NOT_PRE": "Tarkastus ei ole ennakko-tarkastus",
   "NOT_POST": "Tarkastus ei ole jälkitarkastus",
   "INVALID_PRODUCTION_TIME": "Tuotantoaika väärä",
