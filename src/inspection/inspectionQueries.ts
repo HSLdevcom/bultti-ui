@@ -43,6 +43,8 @@ export const lightPostInspectionFragment = gql`
     status
     operatorId
     seasonId
+    hslAccepted
+    operatorAccepted
     operator {
       id
       operatorName

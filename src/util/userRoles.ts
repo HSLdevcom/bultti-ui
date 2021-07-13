@@ -92,3 +92,12 @@ export function hasOperatorUserAccessRights(
     !!user && user.role === UserRole.Operator && (user.operatorIds || []).includes(operatorId)
   )
 }
+
+export function useIsTestUser() {
+  const [user] = useStateValue('user')
+  return isTestUser(user)
+}
+
+export function isTestUser(user?: User) {
+  return !!user && user.hslIdGroups?.includes('HSL-testing')
+}

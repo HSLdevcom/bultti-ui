@@ -1,7 +1,7 @@
 import React, { CSSProperties, useCallback } from 'react'
 import styled from 'styled-components/macro'
 import { observer } from 'mobx-react-lite'
-import { Inspection, InspectionStatus, InspectionType, UserRole } from '../schema-types'
+import { Inspection, InspectionStatus, InspectionType, PostInspection } from '../schema-types'
 import { Button, ButtonSize, ButtonStyle } from '../common/components/buttons/Button'
 import {
   useCanEditInspection,
@@ -18,11 +18,12 @@ import {
 } from './inspectionQueries'
 import { useStateValue } from '../state/useAppState'
 import { useRouteMatch } from 'react-router-dom'
-import { useHasAccessRights, useHasAdminAccessRights } from '../util/userRoles'
+import { useHasAdminAccessRights } from '../util/userRoles'
 import { text, Text } from '../util/translate'
 import { useShowInfoNotification } from '../util/useShowNotification'
 import { useNavigate } from '../util/urlValue'
 import { useUnsavedChangesPrompt } from '../util/promptUnsavedChanges'
+import PostInspectionAcceptance from './PostInspectionAcceptance'
 
 const ButtonRow = styled.div`
   margin: auto -1rem 0;
@@ -44,6 +45,30 @@ const ButtonRow = styled.div`
     background: transparent;
   }
 `
+
+type InspectionAcceptanceButtonPropTypes = {
+  hasErrors: boolean
+  onClick: () => unknown
+  label: string
+  loading?: boolean
+  buttonStyle?: ButtonStyle
+}
+
+export const InspectionAcceptButton: React.FC<InspectionAcceptanceButtonPropTypes> = observer(
+  ({ onClick, hasErrors, loading, label, buttonStyle = ButtonStyle.NORMAL }) => {
+    return (
+      <Button
+        disabled={hasErrors}
+        style={{ marginLeft: 'auto' }}
+        loading={loading}
+        buttonStyle={ButtonStyle.NORMAL}
+        size={ButtonSize.MEDIUM}
+        onClick={onClick}>
+        {label}
+      </Button>
+    )
+  }
+)
 
 export type PropTypes = {
   inspection: Inspection
@@ -258,15 +283,20 @@ const InspectionActions = observer(
 
           {inspection.status === InspectionStatus.InReview && canUserPublish && isEditing && (
             <>
-              <Button
-                disabled={hasErrors}
-                style={{ marginLeft: 'auto' }}
-                loading={publishLoading}
-                buttonStyle={ButtonStyle.NORMAL}
-                size={ButtonSize.MEDIUM}
-                onClick={onPublishInspection}>
-                <Text>inspection_actions_publish</Text>
-              </Button>
+              {inspectionType === InspectionType.Post ? (
+                <PostInspectionAcceptance
+                  loading={publishLoading}
+                  inspection={inspection as PostInspection}
+                  onAccept={onPublishInspection}
+                />
+              ) : (
+                <InspectionAcceptButton
+                  hasErrors={hasErrors}
+                  onClick={onPublishInspection}
+                  loading={publishLoading}
+                  label={text('inspection_actions_publish')}
+                />
+              )}
               <Button
                 style={{ marginLeft: 'auto', marginRight: 0 }}
                 loading={rejectLoading}

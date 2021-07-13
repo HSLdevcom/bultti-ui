@@ -261,6 +261,11 @@
   "postInspection_sanctionReason_UNIT_EQUIPMENT_MAX_AGE_VIOLATION": "Kohteen maksimi-iän ylitys",
   "postInspection_sanctionReason_EMISSION_CLASS_DEFICIENCY": "Suoritevaatimuksen alitus",
 
+  "postInspection_acceptance_hslAccepted": "HSL hyväksynyt",
+  "postInspection_acceptance_hslAcceptButtonLabel": "Hyväksy HSL pääkäyttäjänä",
+  "postInspection_acceptance_operatorAccepted": "Liikennöitsijä hyväksynyt",
+  "postInspection_acceptance_operatorAcceptButtonLabel": "Hyväksy liikennöitsijä-edustajana",
+
   "postInspection_heading_sanctions": "Sanktiot",
   "postInspection_heading_equipmentDefectSanctions": "Kalustovikasanktiot",
 
