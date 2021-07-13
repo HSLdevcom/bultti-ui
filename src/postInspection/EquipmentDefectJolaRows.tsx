@@ -10,6 +10,7 @@ import { FlexRow } from '../common/components/common'
 import { Button, ButtonSize, ButtonStyle } from '../common/components/buttons/Button'
 import PagedTable from '../common/table/PagedTable'
 import { ValueOf } from '../type/common'
+import { LoadingDisplay } from '../common/components/Loading'
 
 export type PropTypes = {
   inspection: PostInspection
@@ -85,6 +86,7 @@ const EquipmentDefectJolaRows: React.FC<PropTypes> = observer(({ inspection }) =
 
   return (
     <ExpandableSection
+      style={{ position: 'relative' }}
       isExpanded={true}
       unmountOnClose={true}
       headerContent={
@@ -92,6 +94,7 @@ const EquipmentDefectJolaRows: React.FC<PropTypes> = observer(({ inspection }) =
           <Text>postInspection_jolaPreview_heading</Text>
         </HeaderMainHeading>
       }>
+      <LoadingDisplay loading={loading} />
       <FlexRow style={{ marginBottom: '1rem', justifyContent: 'flex-end' }}>
         <Button
           buttonStyle={ButtonStyle.SECONDARY}
@@ -110,13 +113,13 @@ const EquipmentDefectJolaRows: React.FC<PropTypes> = observer(({ inspection }) =
           items={data || []}
           renderValue={renderJolaValue}
         />
-      ) : (
+      ) : !loading ? (
         <MessageContainer>
           <SuccessView>
             <Text>postInspection_jolaPreview_empty</Text>
           </SuccessView>
         </MessageContainer>
-      )}
+      ) : null}
     </ExpandableSection>
   )
 })
