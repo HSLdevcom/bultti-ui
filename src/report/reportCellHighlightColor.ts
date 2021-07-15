@@ -10,7 +10,7 @@ function getSanctionSummaryReportCellHighlightColor(
   key: string
 ): string {
   return key === 'averageAgeWeightedObserved' &&
-    rowItem.item.averageAgeWeightedObserved > rowItem.item.unitEquipmentMaxAge
+    rowItem.item.averageAgeWeightedObserved > rowItem.item.averageAgeRequired
     ? 'var(--yellow)'
     : ''
 }

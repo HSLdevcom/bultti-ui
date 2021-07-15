@@ -41,6 +41,7 @@ export const createReportQueryByName = (reportName: string) => {
         seasonId
         showSanctioned
         showUnsanctioned
+        groupRowsBy
         filters {
           field
           filterValue

@@ -3,7 +3,7 @@ import React, { ReactNode, RefObject, useCallback } from 'react'
 import { round } from '../../util/round'
 import { format, isValid, parseISO } from 'date-fns'
 import { DEFAULT_DECIMALS, READABLE_TIME_FORMAT } from '../../constants'
-import { toString } from 'lodash'
+import { difference, toString } from 'lodash'
 import { CellContent } from './TableCell'
 import { getThousandSeparatedNumber } from '../../util/formatNumber'
 import { ValueOf } from '../../type/common'
@@ -167,6 +167,16 @@ export const TableContext = React.createContext({})
 export const defaultGetRowHighlightColor = (): string => ''
 
 export const defaultGetCellHighlightColor = (): string => ''
+
+export function findEmptyKeys(items: Record<string, unknown>[]) {
+  return items.reduce((emptyCols: string[], item) => {
+    let nonEmptyCols = Object.entries(item)
+      .filter(([, value]) => typeof value !== 'undefined' && value !== null)
+      .map(([key]) => key)
+
+    return difference(emptyCols, nonEmptyCols)
+  }, Object.keys(items[0] || {}))
+}
 
 export const NotApplicableValue = (
   <span style={{ color: '#aaa' }}>{text('not_applicable')}</span>

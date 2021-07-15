@@ -19,7 +19,7 @@ type SanctionSummaryReportItemConstants = {
   totalKilometers: number
   areaName: string
   averageAgeWeightedObserved: number
-  unitEquipmentMaxAge: number
+  averageAgeRequired: number
 }
 
 type SanctionSummaryReportItem = SanctionSummaryReportItemConstants & Record<string, number>
@@ -35,7 +35,7 @@ function getSanctionColumns(
   let cols = {}
   let reasonText = text('postInspection_sanctionReason_' + sanctionReason)
   let sanctionAmountCol = `${reasonText} ${sanctionAmount}%`
-  let sanctionAmountKmCol = `${reasonText} KM`
+  let sanctionAmountKmCol = `${reasonText} S${sanctionAmount} (km)`
 
   cols[sanctionAmountCol] = values.sanctionPercentageAmount
   cols[sanctionAmountKmCol] = values.sanctionResultKilometers
@@ -74,12 +74,12 @@ function sanctionSummaryTransform(
         totalKilometers: row.totalKilometers,
         areaName: row.areaName,
         averageAgeWeightedObserved: row.averageAgeWeightedObserved,
-        unitEquipmentMaxAge: row.unitEquipmentMaxAge,
+        averageAgeRequired: row.averageAgeRequired,
         ...sanctionAmountColumnsTemplate,
       }
     } else {
       resultRow.totalKilometers = row.totalKilometers
-      resultRow.unitEquipmentMaxAge = row.unitEquipmentMaxAge
+      resultRow.averageAgeRequired = row.averageAgeRequired
     }
 
     let sanctionCols = getSanctionColumns(sanctionPercentageAmount, sanctionReason, {

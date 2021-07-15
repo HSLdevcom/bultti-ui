@@ -86,7 +86,9 @@ const FilteredResponseTable = observer(
         )}
         {Object.entries(itemGroups).map(([groupName, items]) => (
           <React.Fragment key={groupName}>
-            {groupName && groupName !== 'default' && <SubHeading>{groupName}</SubHeading>}
+            {groupName && groupName !== 'default' && (
+              <SubHeading style={{ marginBottom: 0 }}>{groupName}</SubHeading>
+            )}
             <PagedTable<ItemType>
               {...tableProps}
               items={transformItems(items)}

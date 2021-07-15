@@ -142,7 +142,7 @@ const ProcurementUnitItem: React.FC<PropTypes> = observer(
                   <HeaderHeading>
                     <Text>procurementUnit_ageRequirement</Text>
                   </HeaderHeading>
-                  {procurementUnit?.medianAgeRequirement || 0}{' '}
+                  {procurementUnit?.averageAgeRequirement || 0}{' '}
                   <Text>procurementUnit_ageRequirementYears</Text>
                 </HeaderSection>
                 <HeaderSection style={{ flexGrow: 2 }} error={contractInvalid}>

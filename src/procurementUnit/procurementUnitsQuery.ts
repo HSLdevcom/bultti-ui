@@ -8,7 +8,7 @@ export const ProcurementUnitFragment = gql`
     operatorId
     startDate
     endDate
-    medianAgeRequirement
+    averageAgeRequirement
     optionsUsed
     area {
       id
